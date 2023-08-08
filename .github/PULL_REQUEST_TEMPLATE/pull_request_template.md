@@ -1,39 +1,38 @@
 # Description
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
+> นำ url ของ JIRA card มาใส่หลัง [0]
 
-Fixes # (issue)
+[0]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
-## Type of change
+**[JIRA Card Reference][0]**
 
-Please delete options that are not relevant.
+## Manual Test
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+> - แสดงขั้นตอนการทำงานของ feature ที่ implement
+> - สามารถแนบรูปผลการ run manual test มาได้
+> - สามารถมีหัวข้อย่อยได้ (Header 3++)
+> - หากรู้สึกว่ามีหัวข้อเยอะเกินไปสามารถเขียนในรูปแบบ dropdown ได้
+> - สามารถใส่ตัวอย่างของ data ได้ถ้า feature ที่ทำมีความเกี่ยวข้อง เช่น publish job, formatted data, response etc.
 
-# How Has This Been Tested?
+### Example dropdown
 
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
+<details><summary>Before</summary><img width="332" alt="image" src="https://github.com/AlbertPuwadol/pr-template/assets/45484127/d303fb26-c743-4582-860c-4d01152dc106">
+</details>
 
-- [ ] Test A
-- [ ] Test B
+<details><summary>After</summary><img width="332" alt="image" src="https://github.com/AlbertPuwadol/pr-template/assets/45484127/281b51ef-a315-49ba-8367-ca8e75fb3877">
+</details>
 
-**Test Configuration**:
-* Firmware version:
-* Hardware:
-* Toolchain:
-* SDK:
+### Example data
 
-# Checklist:
+```
+{
+    "text":"Hello World!"
+}
+```
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream modules
+------------------------------
+# NOTE
 
+> ส่วนที่เอาไว้เขียน Note หรือ Concern เพิ่มเติม เช่น confirm crontab, username/password ของ DB, รูปใน PR ไม่ตรงกับความเป็นจริง etc.
+### Example Note
+- *อย่าลืมแก้ไข url card JIRA*
