@@ -34,9 +34,9 @@ jobs:
                   commands:
                       | # list of commands, specified as a valid JSON string
                       [
-                      { "command": "addWorksheet", "args": { "worksheetTitle": "Test-${RELEASE_TAG}" }},
-                      { "command": "updateData", "args": { "data": [["${DETAILS}"]] }},
-                      { "command": "getData", "args": { "range": "'Test-${RELEASE_TAG}'!A1" } }
+                      { "command": "addWorksheet", "args": { "worksheetTitle": "Test-${{ env.RELEASE_TAG }}" }},
+                      { "command": "updateData", "args": { "data": [["${{ env.DETAILS }}"]] }},
+                      { "command": "getData", "args": { "range": "'Test-${{ env.RELEASE_TAG }}'!A1" } }
                       ]
               env:
                   GSHEET_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEET_CLIENT_EMAIL }}
