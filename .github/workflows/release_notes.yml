@@ -26,16 +26,16 @@ jobs:
                   echo "The release notes are:"
                   echo "DETAILS=${{ steps.get_release.outputs.RELEASE_BODY }}"
 
-            - id: "update_worksheet"
-              uses: jroehl/gsheet.action@v2.0.0 # you can specify '@release' to always have the latest changes
+            - name: gsheet.action
+              uses: jroehl/gsheet.action@v2.1.1
               with:
                   spreadsheetId: ${{ secrets.GOOGLE_SHEET_ID }}
                   commands:
                       | # list of commands, specified as a valid JSON string
                       [
                       { "command": "addWorksheet", "args": { "worksheetTitle": "Test" }},
-                      { "command": "updateData", "args": { "data": [["A1", "A2", "A3"]] }},
-                      { "command": "getData", "args": { "range": "'Yoo'!A2:B3" } }
+                      { "command": "updateData", "args": { "data": [["${DETAILS}"]] }},
+                      { "command": "getData", "args": { "range": "'Test'!A1" } }
                       ]
               env:
                   GSHEET_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEET_CLIENT_EMAIL }}
