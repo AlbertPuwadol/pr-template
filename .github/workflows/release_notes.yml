@@ -37,8 +37,7 @@ jobs:
                   commands:
                       | # list of commands, specified as a valid JSON string
                       [
-                        { "command": "getWorksheet", "args": { "worksheetTitle": "Test-v1.5.0" }},
-                        { "command": "appendData", "args": { "data": [["Test", "Test2", "Test3"]] }}
+                        { "command": "appendData", "args": { "data": [["Test", "Test2", "Test3"]], "worksheetTitle": "Test-v1.5.0", "minCol": 2 }}
                       ]
               env:
                   GSHEET_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEET_CLIENT_EMAIL }}
