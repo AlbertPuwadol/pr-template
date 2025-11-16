@@ -25,7 +25,9 @@ jobs:
             - name: Use Release Notes
               run: |
                   echo "The release notes are:"
-                  echo "DETAILS=${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
+                  echo "DETAILS<<EOF" >> $GITHUB_ENV
+                  echo "${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
+                  echo "EOF" >> $GITHUB_ENV
 
             - name: gsheet.action
               uses: jroehl/gsheet.action@v2.1.1
