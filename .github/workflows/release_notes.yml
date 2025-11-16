@@ -31,10 +31,10 @@ jobs:
               uses: jroehl/gsheet.action@v2.1.1
               with:
                   spreadsheetId: ${{ secrets.GOOGLE_SHEET_ID }}
-                  worksheetTitle: "Test-v1.5.0"
                   commands:
                       | # list of commands, specified as a valid JSON string
                       [
+                        { "command": "getWorksheet", "args": { "worksheetTitle": "Test-v1.5.0" }},
                         { "command": "appendData", "args": { "data": [["${{ env.DETAILS }}"]] }},
                       ]
               env:
