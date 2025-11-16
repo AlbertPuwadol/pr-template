@@ -1,3 +1,3 @@
 # pr-template
 
-Yo
+Yo Bruhh
