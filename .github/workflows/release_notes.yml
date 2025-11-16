@@ -1,31 +1,34 @@
 name: Write Release Notes
 
 on:
-    release:
-        types: [published]
+    # release:
+    #     types: [published]
+    push:
+        branches:
+            - main
 
 jobs:
     get_release_notes:
         runs-on: ubuntu-latest
         steps:
-            - name: Get Release Notes
-              id: get_release
-              run: |
-                  RELEASE_TAG="${{ github.ref_name }}"
-                  echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
-                  RELEASE_INFO=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
-                    "https://api.github.com/repos/${{ github.repository }}/releases/tags/${RELEASE_TAG}")
-                  RELEASE_BODY=$(echo "$RELEASE_INFO" | jq -r '.body')
-                  echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
-                  echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
-                  echo "EOF" >> $GITHUB_OUTPUT
-              env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            # - name: Get Release Notes
+            #   id: get_release
+            #   run: |
+            #       RELEASE_TAG="${{ github.ref_name }}"
+            #       echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
+            #       RELEASE_INFO=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+            #         "https://api.github.com/repos/${{ github.repository }}/releases/tags/${RELEASE_TAG}")
+            #       RELEASE_BODY=$(echo "$RELEASE_INFO" | jq -r '.body')
+            #       echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
+            #       echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
+            #       echo "EOF" >> $GITHUB_OUTPUT
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-            - name: Use Release Notes
-              run: |
-                  echo "The release notes are:"
-                  echo "DETAILS=${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
+            # - name: Use Release Notes
+            #   run: |
+            #       echo "The release notes are:"
+            #       echo "DETAILS=${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
 
             - name: gsheet.action
               uses: jroehl/gsheet.action@v2.1.1
