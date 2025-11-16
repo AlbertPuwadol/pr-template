@@ -37,7 +37,7 @@ jobs:
                   commands:
                       | # list of commands, specified as a valid JSON string
                       [
-                        { "command": "getWorksheet", "args": { "worksheetTitle": "Test-v1.5.0" }},
+                        { "command": "getWorksheet", "args": { "worksheetTitle": "Sheet1" }},
                         { "command": "appendData", "args": { "data": [["${{ env.DETAILS }}"]] }},
                       ]
               env:
