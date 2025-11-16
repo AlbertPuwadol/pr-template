@@ -2,24 +2,24 @@
 changelog:
   categories:
     - title: "🚀 Features"
-      labels:
-        - "feature"
-        - "enhancement"
+      branches:
+        - "feature/*"
     - title: "🐛 Bug Fixes"
-      labels:
-        - "bug"
-    - title: "  /span>  Dependencies"
-      labels:
-        - "dependencies"
-        - "deps"
-    - title: "📝 Documentation"
-      labels:
-        - "documentation"
-    - title: "🧹 Chore"
-      labels:
-        - "chore"
-  exclude:
-    labels:
-      - "skip-changelog"
-    authors:
-      - "dependabot"
+      branches:
+        - "fix/*"
+        - "hotfix/*"
+  #   - title: "  /span>  Dependencies"
+  #     labels:
+  #       - "dependencies"
+  #       - "deps"
+  #   - title: "📝 Documentation"
+  #     labels:
+  #       - "documentation"
+  #   - title: "🧹 Chore"
+  #     labels:
+  #       - "chore"
+  # exclude:
+  #   labels:
+  #     - "skip-changelog"
+  #   authors:
+  #     - "dependabot"
