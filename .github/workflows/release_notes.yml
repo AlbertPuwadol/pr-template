@@ -29,15 +29,21 @@ jobs:
                   echo "${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
                   echo "EOF" >> $GITHUB_ENV
 
+                  - name: Prepare JSON command
+                  id: prepare_json
+                  run: |
+                      COMMANDS=$(jq -n \
+                        --arg details "${{ env.DETAILS }}" \
+                        '[{"command": "appendData", "args": {"data": [[$details]], "worksheetTitle": "Test-v1.5.0", "minCol": 1}}]')
+                      echo "COMMANDS<<EOF" >> $GITHUB_OUTPUT
+                      echo "$COMMANDS" >> $GITHUB_OUTPUT
+                      echo "EOF" >> $GITHUB_OUTPUT
+
             - name: gsheet.action
               uses: jroehl/gsheet.action@v2.1.1
               with:
                   spreadsheetId: ${{ secrets.GOOGLE_SHEET_ID }}
-                  commands:
-                      | # list of commands, specified as a valid JSON string
-                      [
-                        { "command": "appendData", "args": { "data": [["${{ env.DETAILS }}"]], "worksheetTitle": "Test-v1.5.0", "minCol": 1 }}
-                      ]
+                  commands: ${{ steps.prepare_json.outputs.COMMANDS }}
               env:
                   GSHEET_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEET_CLIENT_EMAIL }}
                   GSHEET_PRIVATE_KEY: ${{ secrets.GOOGLE_SHEET_PRIVATE_KEY }}
