@@ -1,4 +1,4 @@
 # pr-template
 
 Yo Bruhh
-test
+test too
