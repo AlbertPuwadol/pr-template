@@ -8,7 +8,7 @@ changelog:
     - title: "🐛 Bug Fixes"
       labels:
         - "bug"
-    - title: "  /span>  Dependencies"
+    - title: "👒 Dependencies"
       labels:
         - "dependencies"
         - "deps"
