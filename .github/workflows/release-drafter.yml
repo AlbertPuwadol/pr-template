@@ -6,8 +6,8 @@ on:
         # Only following types are handled by the action, but one can default to all as well
         types: [opened, reopened, synchronize]
     # pull_request_target event is required for autolabeler to support PRs from forks
-    pull_request_target:
-        types: [opened, reopened, synchronize]
+    # pull_request_target:
+    #     types: [opened, reopened, synchronize]
 
 permissions:
     contents: read
@@ -35,3 +35,5 @@ jobs:
               #   disable-autolabeler: true
               env:
                   GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+              with:
+                  commitish: master
