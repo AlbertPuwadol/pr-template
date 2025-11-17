@@ -39,7 +39,7 @@ jobs:
                   echo "$COMMANDS" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
 
-            - name: gsheet.action
+            - name: Update Google Sheet
               uses: jroehl/gsheet.action@v2.1.1
               with:
                   spreadsheetId: ${{ secrets.GOOGLE_SHEET_ID }}
