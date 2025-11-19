@@ -57,7 +57,7 @@ jobs:
                   COL3="$REPO_NAME"
                   # Column 4: release tag as hyperlink to release notes
                   RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_TAG }}"
-                  COL4="=HYPERLINK('${RELEASE_URL}','${{ env.RELEASE_TAG }}')"
+                  COL4='=HYPERLINK("'"${RELEASE_URL}"'","'"${{ env.RELEASE_TAG }}"'")'
                   # Column 5: data version
                   COL5=""
                   # Column 6: deploy status
