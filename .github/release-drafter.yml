@@ -28,4 +28,10 @@ version-resolver:
 template: |
   ## Changes
 
+  ### <EPIC NAME>
+  - <CHANGE DESCRIPTION>
+  - <CHANGE DESCRIPTION>
+
+  **Epic/JIRA Card:** <JIRA CARD URL>
+  
   $CHANGES
