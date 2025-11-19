@@ -41,10 +41,9 @@ jobs:
                   # Extract all URLs from ### [Feature Name](url) pattern
                   FEATURE_URLS=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[[^\]]+\]\(\K[^)]+' | tr '\n' '\n' || echo "")
 
-                  # Extract the Changes section (everything between ## Changes and the next ## heading or end)
-                  # Remove ### markdown headers and extract only feature names (remove URLs)
-                  # Trim extra whitespace and consolidate multiple newlines
-                  CHANGES_SECTION=$(echo "$RELEASE_BODY" | awk '/^## Changes/,/^## / {if (!/^## /) print}' | sed 's/^### \[\([^]]*\)\]([^)]*)$/\1/' | sed 's/^### //' | awk 'NF {p=1} p' | awk '{gsub(/^[ \t]+|[ \t]+$/, "")}1' | cat -s || echo "$RELEASE_BODY")
+                  # Extract the Changes section with markdown up to ---
+                  # Remove ### headers but keep links and bullet points, trim extra whitespace
+                  CHANGES_SECTION=$(echo "$RELEASE_BODY" | awk '/^## Changes/,/^---$/ {if (!/^## Changes/ && !/^---$/) print}' | sed 's/^### \[\([^]]*\)\]([^)]*)$/\1/' | awk 'NF {p=1} p' | awk '{gsub(/^[ \t]+|[ \t]+$/, "")}1' | cat -s || echo "")
 
                   # Get repository name from github context
                   REPO_NAME="${{ github.event.repository.name }}"
