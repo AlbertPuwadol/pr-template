@@ -71,7 +71,9 @@ jobs:
                   echo "COL1=$COL1" >> $GITHUB_OUTPUT
                   echo "COL2=$COL2" >> $GITHUB_OUTPUT
                   echo "COL3=$COL3" >> $GITHUB_OUTPUT
-                  echo "COL4=$COL4" >> $GITHUB_OUTPUT
+                  echo "COL4<<EOF" >> $GITHUB_OUTPUT
+                  echo "$COL4" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
                   echo "COL5=$COL5" >> $GITHUB_OUTPUT
                   echo "COL6=$COL6" >> $GITHUB_OUTPUT
                   echo "COL7<<EOF" >> $GITHUB_OUTPUT
