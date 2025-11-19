@@ -29,12 +29,69 @@ jobs:
                   echo "${{ steps.get_release.outputs.RELEASE_BODY }}" >> $GITHUB_ENV
                   echo "EOF" >> $GITHUB_ENV
 
+            - name: Format Release Notes for Google Sheet
+              id: format_notes
+              run: |
+                  # Extract feature names and URLs from the Changes section
+                  RELEASE_BODY="${{ env.DETAILS }}"
+
+                  # Extract all feature names from ### [Feature Name](url) pattern
+                  FEATURE_NAMES=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[\K[^\]]+' | tr '\n' ',' | sed 's/,$//' || echo "")
+
+                  # Extract all URLs from ### [Feature Name](url) pattern
+                  FEATURE_URLS=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[[^\]]+\]\(\K[^)]+' | tr '\n' '\n' || echo "")
+
+                  # Extract the Changes section (everything between ## Changes and the next ## heading or end)
+                  CHANGES_SECTION=$(echo "$RELEASE_BODY" | awk '/## Changes/,/^## [^C]/ {if (!/^## [^C]/) print}' | sed '1d' || echo "$RELEASE_BODY")
+
+                  # Get repository name from github context
+                  REPO_NAME="${{ github.event.repository.name }}"
+
+                  # Build the formatted row data
+                  # Column 1: current date in Bangkok timezone (dd/mm/yyyy)
+                  COL1=$(TZ='Asia/Bangkok' date '+%d/%m/%Y')
+                  # Column 2: comma-separated feature names
+                  COL2="$FEATURE_NAMES"
+                  # Column 3: repository name
+                  COL3="$REPO_NAME"
+                  # Column 4: release tag
+                  COL4="${{ env.RELEASE_TAG }}"
+                  # Column 5: empty string
+                  COL5=""
+                  # Column 6: empty string
+                  COL6=""
+                  # Column 7: Changes section with markdown
+                  COL7="$CHANGES_SECTION"
+                  # Column 8: URLs (newline separated)
+                  COL8="$FEATURE_URLS"
+
+                  # Output as multiline variables
+                  echo "COL1=$COL1" >> $GITHUB_OUTPUT
+                  echo "COL2=$COL2" >> $GITHUB_OUTPUT
+                  echo "COL3=$COL3" >> $GITHUB_OUTPUT
+                  echo "COL4=$COL4" >> $GITHUB_OUTPUT
+                  echo "COL5=$COL5" >> $GITHUB_OUTPUT
+                  echo "COL6=$COL6" >> $GITHUB_OUTPUT
+                  echo "COL7<<EOF" >> $GITHUB_OUTPUT
+                  echo "$COL7" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+                  echo "COL8<<EOF" >> $GITHUB_OUTPUT
+                  echo "$COL8" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
             - name: Prepare JSON command
               id: prepare_json
               run: |
                   COMMANDS=$(jq -n \
-                  --arg details "${{ env.DETAILS }}" \
-                  '[{"command": "appendData", "args": {"data": [[$details]], "worksheetTitle": "Test-v1.5.0", "minCol": 1}}]')
+                  --arg col1 "${{ steps.format_notes.outputs.COL1 }}" \
+                  --arg col2 "${{ steps.format_notes.outputs.COL2 }}" \
+                  --arg col3 "${{ steps.format_notes.outputs.COL3 }}" \
+                  --arg col4 "${{ steps.format_notes.outputs.COL4 }}" \
+                  --arg col5 "${{ steps.format_notes.outputs.COL5 }}" \
+                  --arg col6 "${{ steps.format_notes.outputs.COL6 }}" \
+                  --arg col7 "${{ steps.format_notes.outputs.COL7 }}" \
+                  --arg col8 "${{ steps.format_notes.outputs.COL8 }}" \
+                  '[{"command": "appendData", "args": {"data": [[$col1, $col2, $col3, $col4, $col5, $col6, $col7, $col8]], "worksheetTitle": "Test-v1.5.0", "minCol": 1}}]')
                   echo "COMMANDS<<EOF" >> $GITHUB_OUTPUT
                   echo "$COMMANDS" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
