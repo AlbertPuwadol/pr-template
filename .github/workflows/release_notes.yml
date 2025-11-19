@@ -57,7 +57,7 @@ jobs:
                   COL3="$REPO_NAME"
                   # Column 4: release tag with hyperlink
                   RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_TAG }}"
-                  COL4=$(printf '=HYPERLINK("%s","%s")' "$RELEASE_URL" "${{ env.RELEASE_TAG }}")
+                  COL4=$(printf '\'=HYPERLINK("%s","%s")' "$RELEASE_URL" "${{ env.RELEASE_TAG }}")
                   # Column 5: data version
                   COL5=""
                   # Column 6: deploy status
