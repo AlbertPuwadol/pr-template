@@ -40,4 +40,6 @@ template: |
 
   release sheet url: https://docs.google.com/spreadsheets/d/1ezLOeb8MvnMy9KFo3aQujGzZpvAcJjFwYV3pqoVqaY0/edit?usp=sharing
 
+  ---
+
   $CHANGES
