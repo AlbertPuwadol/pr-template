@@ -36,7 +36,7 @@ jobs:
                   RELEASE_BODY="${{ env.DETAILS }}"
 
                   # Extract all feature names from ### [Feature Name](url) pattern
-                  FEATURE_NAMES=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[\K[^\]]+' | tr '\n' ',' | sed 's/,$//' || echo "")
+                  FEATURE_NAMES=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[\K[^\]]+' | tr '\n' ', ' | sed 's/,$//' || echo "")
 
                   # Extract all URLs from ### [Feature Name](url) pattern
                   FEATURE_URLS=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[[^\]]+\]\(\K[^)]+' | tr '\n' '\n' || echo "")
