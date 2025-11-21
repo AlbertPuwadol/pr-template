@@ -49,8 +49,8 @@ jobs:
                   REPO_NAME="${{ github.event.repository.name }}"
 
                   # Build the formatted row data
-                  # Column 1: current date in Bangkok timezone (dd/mm/yyyy)
-                  COL1=$(TZ='Asia/Bangkok' date '%m/+%d/%Y')
+                  # Column 1: current date in Bangkok timezone (mm/dd/yyyy)
+                  COL1=$(TZ='Asia/Bangkok' date '+%m/%d/%Y')
                   # Column 2: comma-separated feature names
                   COL2="$FEATURE_NAMES"
                   # Column 3: repository name
