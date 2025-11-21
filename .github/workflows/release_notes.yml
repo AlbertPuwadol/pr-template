@@ -38,8 +38,8 @@ jobs:
                   # Extract all feature names from ### [Feature Name](url) pattern
                   FEATURE_NAMES=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[\K[^\]]+' | tr '\n' ',' | sed 's/,$//' || echo "")
 
-                  # Extract all URLs from ### [Feature Name](url) pattern and convert to HYPERLINK formulas
-                  FEATURE_URLS=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[[^\]]+\]\(\K[^)]+' | awk 'BEGIN {first=1} NF {if (first) {printf "=HYPERLINK(\"%s\",\"%s\")", $0, $0; first=0} else {printf "&CHAR(10)&HYPERLINK(\"%s\",\"%s\")", $0, $0}} END {if (first) print ""}' || echo "")
+                  # Extract all URLs from ### [Feature Name](url) pattern
+                  FEATURE_URLS=$(echo "$RELEASE_BODY" | grep -oP '###\s*\[[^\]]+\]\(\K[^)]+' | tr '\n' '\n' || echo "")
 
                   # Extract the Changes section with markdown up to ---
                   # Remove ### headers but keep links and bullet points, trim extra whitespace
