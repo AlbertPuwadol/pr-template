@@ -61,7 +61,7 @@ jobs:
                   # Column 5: data version
                   COL5=""
                   # Column 6: deploy status
-                  COL6="Waiting for deploy"
+                  COL6=""
                   # Column 7: changes section with markdown
                   COL7="$CHANGES_SECTION"
                   # Column 8: URLs (newline separated)
