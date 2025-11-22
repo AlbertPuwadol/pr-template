@@ -3,7 +3,7 @@ name: Release Drafter
 on:
     workflow_call:
         inputs:
-            config_path:
+            base_branch:
                 required: true
                 type: string
         secrets:
@@ -48,4 +48,4 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  commitish: master
+                  commitish: ${{ inputs.base_branch }}
