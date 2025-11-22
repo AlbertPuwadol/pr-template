@@ -11,10 +11,9 @@ on:
             repository_name:
                 required: true
                 type: string
-        secrets:
-            PERSONAL_ACCESS_TOKEN:
+            personal_access_token:
                 required: true
-                description: "GitHub token"
+                type: string
 
 jobs:
     get_release_notes:
@@ -25,14 +24,14 @@ jobs:
               run: |
                   RELEASE_TAG="${{ inputs.release_tag }}"
                   echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
-                  RELEASE_INFO=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+                  RELEASE_INFO=$(curl -s -H "Authorization: token ${{ inputs.personal_access_token }}" \
                     "https://api.github.com/repos/${{ inputs.repository_name }}/releases/tags/${RELEASE_TAG}")
                   RELEASE_BODY=$(echo "$RELEASE_INFO" | jq -r '.body')
                   echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
                   echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
               env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  GITHUB_TOKEN: ${{ inputs.personal_access_token }}
 
             - name: Use Release Notes
               run: |

@@ -6,10 +6,9 @@ on:
             base_branch:
                 required: true
                 type: string
-        secrets:
-            PERSONAL_ACCESS_TOKEN:
+            personal_access_token:
                 required: true
-                description: "GitHub token"
+                type: string
     # push:
     #     branches:
     #         - master
@@ -46,6 +45,6 @@ jobs:
               #   config-name: my-config.yml
               #   disable-autolabeler: true
               env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  GITHUB_TOKEN: ${{ inputs.personal_access_token }}
               with:
                   commitish: ${{ inputs.base_branch }}
