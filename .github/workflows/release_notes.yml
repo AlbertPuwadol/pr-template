@@ -1,8 +1,20 @@
 name: Write Release Notes
 
 on:
-    release:
-        types: [published]
+    # release:
+    #     types: [published]
+    workflow_call:
+        inputs:
+            release_tag:
+                required: true
+                type: string
+            repository_name:
+                required: true
+                type: string
+        secrets:
+            GITHUB_TOKEN:
+                required: true
+                description: "GitHub token"
 
 jobs:
     get_release_notes:
@@ -11,16 +23,16 @@ jobs:
             - name: Get Release Notes
               id: get_release
               run: |
-                  RELEASE_TAG="${{ github.ref_name }}"
+                  RELEASE_TAG="${{ inputs.release_tag }}"
                   echo "RELEASE_TAG=${RELEASE_TAG}" >> $GITHUB_ENV
-                  RELEASE_INFO=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
-                    "https://api.github.com/repos/${{ github.repository }}/releases/tags/${RELEASE_TAG}")
+                  RELEASE_INFO=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                    "https://api.github.com/repos/${{ inputs.repository_name }}/releases/tags/${RELEASE_TAG}")
                   RELEASE_BODY=$(echo "$RELEASE_INFO" | jq -r '.body')
                   echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
                   echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
               env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Use Release Notes
               run: |
@@ -46,7 +58,7 @@ jobs:
                   CHANGES_SECTION=$(echo "$RELEASE_BODY" | awk '/^## Changes/,tolower($0) ~ /release sheet url:/ {if (!/^## Changes/ && tolower($0) !~ /release sheet url:/) print}' | sed -E 's/^[[:space:]]*###[[:space:]]*\[([^]]+)\]\([^)]+\)[[:space:]]*$/\1/' | sed -E 's/^[[:space:]]*###[[:space:]]*//' | awk 'NF {p=1} p' | awk '{gsub(/^[ \t]+|[ \t]+$/, "")}1' | grep -v '^[[:space:]]*$' | awk '{if (NR>1 && !/^-/) print ""; print $0}' || echo "")
 
                   # Get repository name from github context
-                  REPO_NAME="${{ github.event.repository.name }}"
+                  REPO_NAME="${{ inputs.repository_name }}"
 
                   # Build the formatted row data
                   # Column 1: current date in Bangkok timezone (mm/dd/yyyy)
@@ -56,7 +68,7 @@ jobs:
                   # Column 3: repository name
                   COL3="$REPO_NAME"
                   # Column 4: release tag with hyperlink
-                  RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${{ env.RELEASE_TAG }}"
+                  RELEASE_URL="https://github.com/${{ inputs.repository_name }}/releases/tag/${{ env.RELEASE_TAG }}"
                   COL4=$(printf '=HYPERLINK("%s","%s")' "$RELEASE_URL" "${{ env.RELEASE_TAG }}")
                   # Column 5: data version
                   COL5=""

@@ -1,16 +1,25 @@
 name: Release Drafter
 
 on:
-    push:
-        branches:
-            - master
-    # pull_request event is required only for autolabeler
-    pull_request:
-        # Only following types are handled by the action, but one can default to all as well
-        types: [opened, reopened, synchronize]
-    # pull_request_target event is required for autolabeler to support PRs from forks
-    # pull_request_target:
+    workflow_call:
+        inputs:
+            config_path:
+                required: true
+                type: string
+        secrets:
+            GITHUB_TOKEN:
+                required: true
+                description: "GitHub token"
+    # push:
+    #     branches:
+    #         - master
+    # # pull_request event is required only for autolabeler
+    # pull_request:
+    #     # Only following types are handled by the action, but one can default to all as well
     #     types: [opened, reopened, synchronize]
+    # # pull_request_target event is required for autolabeler to support PRs from forks
+    # # pull_request_target:
+    # #     types: [opened, reopened, synchronize]
 
 permissions:
     contents: read
@@ -37,6 +46,6 @@ jobs:
               #   config-name: my-config.yml
               #   disable-autolabeler: true
               env:
-                  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   commitish: master
