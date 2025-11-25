@@ -6,10 +6,6 @@ on:
             base_branch:
                 required: true
                 type: string
-        secrets:
-            PERSONAL_ACCESS_TOKEN:
-                required: true
-                description: "Personal access token for the repository"
     # push:
     #     branches:
     #         - master
@@ -34,10 +30,6 @@ jobs:
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            - name: Show secrets
-              run: |
-                  echo "PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-
             # (Optional) GitHub Enterprise requires GHE_HOST variable set
             #- name: Set GHE_HOST
             #  run: |
