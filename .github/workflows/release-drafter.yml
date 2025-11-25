@@ -59,6 +59,7 @@ jobs:
                   elif [ -f pr-template/.github/release-drafter.yml ]; then
                       echo "copying central template to .github/release-drafter.yml"
                       cp pr-template/.github/release-drafter.yml .github/release-drafter.yml
+                      cat .github/release-drafter.yml
                   else
                       echo "no template found; will run without config (may fail)"
                   fi
