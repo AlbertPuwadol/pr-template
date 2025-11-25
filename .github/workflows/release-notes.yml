@@ -66,8 +66,9 @@ jobs:
                   # Remove ### headers but keep links and bullet points, trim extra whitespace
                   CHANGES_SECTION=$(echo "$RELEASE_BODY" | awk '/^## Changes/,tolower($0) ~ /release sheet url:/ {if (!/^## Changes/ && tolower($0) !~ /release sheet url:/) print}' | sed -E 's/^[[:space:]]*###[[:space:]]*\[([^]]+)\]\([^)]+\)[[:space:]]*$/\1/' | sed -E 's/^[[:space:]]*###[[:space:]]*//' | awk 'NF {p=1} p' | awk '{gsub(/^[ \t]+|[ \t]+$/, "")}1' | grep -v '^[[:space:]]*$' | awk '{if (NR>1 && !/^-/) print ""; print $0}' || echo "")
 
-                  # Get repository name from github context
-                  REPO_NAME="${{ inputs.repository_name }}"
+                  # Get repository name from github context and extract only repo name (remove org/)
+                  FULL_REPO="${{ inputs.repository_name }}"
+                  REPO_NAME="${FULL_REPO##*/}" 
 
                   # Build the formatted row data
                   # Column 1: current date in Bangkok timezone (mm/dd/yyyy)
