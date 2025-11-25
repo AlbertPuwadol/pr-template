@@ -40,6 +40,26 @@ jobs:
             #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
 
             # Drafts your next Release notes as Pull Requests are merged into "master"
+
+            - name: Checkout central template repository
+              uses: actions/checkout@v4
+              with:
+                  repository: "AlbertPuwadol/pr-template" # central repo that holds the template
+                  ref: "master" # choose the ref you want
+                  path: "pr-template"
+
+            - name: Ensure release-drafter config exists (copy from central template)
+              run: |
+                  mkdir -p .github
+                  if [ -f .github/release-drafter.yml ]; then
+                      echo "caller provided config; keeping it"
+                  elif [ -f pr-template/.github/release-drafter.yml ]; then
+                      echo "copying central template to .github/release-drafter.yml"
+                      cp pr-template/.github/release-drafter.yml .github/release-drafter.yml
+                  else
+                      echo "no template found; will run without config (may fail)"
+                  fi
+
             - uses: release-drafter/release-drafter@v6
               # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
               # with:
