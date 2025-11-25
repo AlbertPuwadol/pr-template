@@ -11,9 +11,10 @@ on:
             repository_name:
                 required: true
                 type: string
-            personal_access_token:
+        secrets:
+            PERSONAL_ACCESS_TOKEN:
                 required: true
-                type: string
+                description: "Personal access token for the repository"
 
 jobs:
     get_release_notes:
