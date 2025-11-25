@@ -6,6 +6,10 @@ on:
             base_branch:
                 required: true
                 type: string
+        secrets:
+            PERSONAL_ACCESS_TOKEN:
+                required: true
+                description: "Personal access token for the repository"
     # push:
     #     branches:
     #         - master
