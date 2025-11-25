@@ -41,6 +41,9 @@ jobs:
 
             # Drafts your next Release notes as Pull Requests are merged into "master"
 
+            - name: Checkout caller repository
+              uses: actions/checkout@v4
+
             - name: Checkout central template repository
               uses: actions/checkout@v4
               with:
