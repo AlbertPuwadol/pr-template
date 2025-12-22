@@ -11,7 +11,7 @@ jobs:
               uses: AlbertPuwadol/google-sheet-github-action@main
               with:
                   spreadsheet_id: "1ezLOeb8MvnMy9KFo3aQujGzZpvAcJjFwYV3pqoVqaY0"
-                  sheet_name: "Sheet1"
+                  sheet_name: "Feature"
                   values: '["Data 1", "Data 2", 123]'
                   auth_type: "oauth"
                   credentials: ${{ secrets.GOOGLE_OAUTH_TOKEN }}
