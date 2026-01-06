@@ -28,6 +28,8 @@ on:
 jobs:
     get_release_notes:
         runs-on: ubuntu-latest
+        outputs:
+            commands: ${{ steps.prepare_json.outputs.COMMANDS }}
         steps:
             - name: Get Release Notes
               id: get_release
