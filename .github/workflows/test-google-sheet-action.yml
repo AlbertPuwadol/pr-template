@@ -5,10 +5,7 @@ on:
 
 jobs:
     test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Append row to Google Sheet
-              uses: AlbertPuwadol/google-sheet-github-action/.github/workflows/reusable-append-row.yml@main
-              with:
-                  sheet_name: "Activity Log"
-                  values: '["${{ github.repository }}", "${{ github.sha }}", "${{ github.actor }}", "${{ github.event.head_commit.message }}"]'
+        uses: AlbertPuwadol/google-sheet-github-action/.github/workflows/reusable-append-row.yml@main
+        with:
+            sheet_name: "Feature"
+            values: '["${{ github.repository }}", "${{ github.sha }}", "${{ github.actor }}", "${{ github.event.head_commit.message }}"]'
