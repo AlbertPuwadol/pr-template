@@ -15,12 +15,15 @@ on:
             PERSONAL_ACCESS_TOKEN:
                 required: true
                 description: "Personal access token for the repository"
-            GOOGLE_SHEET_CLIENT_EMAIL:
+            GOOGLE_OAUTH_REFRESH_TOKEN:
                 required: true
-                description: "Google sheet client email"
-            GOOGLE_SHEET_PRIVATE_KEY:
+                description: "Google OAuth refresh token"
+            GOOGLE_OAUTH_CLIENT_ID:
                 required: true
-                description: "Google sheet private key"
+                description: "Google OAuth client ID"
+            GOOGLE_OAUTH_CLIENT_SECRET:
+                required: true
+                description: "Google OAuth client secret"
             GOOGLE_SHEET_ID:
                 required: true
                 description: "Google sheet ID"
