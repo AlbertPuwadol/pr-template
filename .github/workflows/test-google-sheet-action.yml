@@ -8,10 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Append row to Google Sheet
-              uses: AlbertPuwadol/google-sheet-github-action@main
+              uses: AlbertPuwadol/google-sheet-github-action/.github/workflows/reusable-append-row.yml@main
               with:
-                  spreadsheet_id: ${{ secrets.GOOGLE_SHEET_ID }}
-                  sheet_name: "Test"
-                  values: '["Data 1", "Data 2", 123]'
-                  auth_type: "oauth"
-                  credentials: ${{ secrets.GOOGLE_OAUTH_TOKEN }}
+                  sheet_name: "Activity Log"
+                  values: '["${{ github.repository }}", "${{ github.sha }}", "${{ github.actor }}", "${{ github.event.head_commit.message }}"]'
