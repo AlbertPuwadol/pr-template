@@ -136,15 +136,13 @@ jobs:
                   echo "$COMMANDS" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
 
-    update_google_sheet:
-        needs: get_release_notes
-        uses: AlbertPuwadol/google-sheet-github-action/.github/workflows/reusable-append-row.yml@main
-        with:
-            sheet_name: "Feature"
-            values: ${{ needs.get_release_notes.outputs.commands }}
-        secrets:
-            SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-            AUTH_TYPE: "oauth_refresh_token"
-            CREDENTIALS: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
-            OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
-            OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+            - name: Append row to Google Sheet
+              uses: AlbertPuwadol/google-sheet-github-action@main
+              with:
+                  sheet_name: "Feature"
+                  values: ${{ steps.prepare_json.outputs.COMMANDS }}
+                  spreadsheet_id: ${{ secrets.GOOGLE_SHEET_ID }}
+                  auth_type: "oauth_refresh_token"
+                  credentials: ${{ secrets.GOOGLE_OAUTH_REFRESH_TOKEN }}
+                  oauth_client_id: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+                  oauth_client_secret: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
